@@ -282,20 +282,6 @@ Listado de todos los países disponibles en el sistema.
 
 ---
 
-### 📜 Logs de Docker Desktop
-Muestra el estado de los contenedores y los logs del backend durante la ejecución.
-
-_(Agrega aquí si tienes una captura específica de los logs)_
-
----
-
-### 📁 Estructura de Paquetes del Backend
-Vista de la organización de las carpetas del código Java en el backend.
-
-_(Puedes agregar una imagen de la estructura desde tu IDE si lo deseas)_
-
----
-
 ## 📞 Contacto
 
 Si tienes alguna pregunta o encuentras algún problema, no dudes en contactarme.
