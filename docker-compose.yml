@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: personasdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nueva_clave
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck: # <<<<<< ¡NUEVA SECCIÓN DE HEALTHCHECK!
+      test: ["CMD-SHELL", "pg_isready -U postgres -d personasdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./CRUD-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/personasdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: nueva_clave
+    depends_on:
+      db: # <<<<<< MODIFICADO PARA ESPERAR AL HEALTHCHECK
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./CRUD-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
